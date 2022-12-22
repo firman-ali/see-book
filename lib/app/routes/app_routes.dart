@@ -10,6 +10,7 @@ abstract class Routes {
   static const BOOK_DETAIL = _Paths.BOOK_DETAIL;
   static const RENT_PAGE = _Paths.RENT_PAGE;
   static const CHECKOUT = _Paths.CHECKOUT;
+  static const RECOMENDATION_PAGE = _Paths.RECOMENDATION_PAGE;
 }
 
 abstract class _Paths {
@@ -21,4 +22,5 @@ abstract class _Paths {
   static const BOOK_DETAIL = '/book-detail';
   static const RENT_PAGE = '/rent-page';
   static const CHECKOUT = '/checkout';
+  static const RECOMENDATION_PAGE = '/recomendation-page';
 }

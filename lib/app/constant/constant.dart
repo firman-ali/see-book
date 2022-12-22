@@ -8,3 +8,7 @@ List<String> constantCategory = [
   "Dicount Item and Popular",
   "This is a long category to test scrolling effect on category section"
 ];
+
+double sidePadding = 24.0;
+double cardRadius = 25.0;
+double imageradius = 30.0;

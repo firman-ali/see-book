@@ -10,6 +10,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/recomendation_page/bindings/recomendation_page_binding.dart';
+import '../modules/recomendation_page/views/recomendation_page_view.dart';
 import '../modules/registration/bindings/registration_binding.dart';
 import '../modules/registration/views/registration_view.dart';
 import '../modules/rent_page/bindings/rent_page_binding.dart';
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.CHECKOUT,
       page: () => const CheckoutView(),
       binding: CheckoutBinding(),
+    ),
+    GetPage(
+      name: _Paths.RECOMENDATION_PAGE,
+      page: () => const RecomendationPageView(),
+      binding: RecomendationPageBinding(),
     ),
   ];
 }

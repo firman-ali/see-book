@@ -1,23 +1,57 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:see_book_app/app/modules/login/service/login_service.dart';
+import 'package:see_book_app/app/routes/app_pages.dart';
 
 class LoginController extends GetxController {
-  //TODO: Implement LoginController
+  late GlobalKey<FormState> formKey;
+  late TextEditingController emailTextEditingController;
+  late TextEditingController passwordTextEditingController;
+  bool isPasswordIsObescured = true;
 
-  final count = 0.obs;
   @override
   void onInit() {
+    formKey = GlobalKey<FormState>();
+    emailTextEditingController = TextEditingController();
+    passwordTextEditingController = TextEditingController();
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  changePasswordObscureStatus() {
+    isPasswordIsObescured = !isPasswordIsObescured;
+    update();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
+  String? emailValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return "This field can't be empty";
+    } else if (GetUtils.isEmail(value) == false) {
+      return "Please enter a valid email";
+    } else {
+      return null;
+    }
   }
 
-  void increment() => count.value++;
+  String? passwordValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return "This field can't be empty";
+    } else if (value.length < 7) {
+      return "Password must contain at least 7 characters";
+    } else {
+      return null;
+    }
+  }
+
+  formValidator() {
+    if (formKey.currentState?.validate() == true) {
+      try {
+        LoginService().login(emailTextEditingController.text,
+            passwordTextEditingController.text);
+        Get.offNamed(Routes.HOME);
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
 }
