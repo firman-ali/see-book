@@ -1,6 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:see_book_app/app/constant/constant.dart';
+import 'package:see_book_app/app/model/transaction_model.dart';
+import 'package:see_book_app/app/modules/checkout/service/checkout_service.dart';
 import 'package:see_book_app/app/modules/checkout/views/payment_view.dart';
+
+import '../../../model/transaction_data_model.dart';
+import '../../../routes/app_pages.dart';
 
 class CheckoutController extends GetxController {
   String paymentMethod = paymentMethodEWallet[0];
@@ -29,5 +35,23 @@ class CheckoutController extends GetxController {
     paymentFee = paymentMethodFee;
     update();
     Get.back();
+  }
+
+  checkout() async {
+    final token = await FirebaseAuth.instance.currentUser?.getIdToken() ?? "";
+    final data = TransactionModel(
+        customerName: 'test',
+        customerPhoneNumber: "08123456789",
+        book: "B-207",
+        priceType: "permanent",
+        duration: 0,
+        subTotal: 5000,
+        voucher: 0,
+        total: 5000,
+        paymentMethod: "qris",
+        paymentChannel: "qris");
+    TransactionDataModel? response =
+        await CheckoutService.addCheckout(data, token);
+    Get.toNamed(Routes.RECOMENDATION_PAGE, arguments: response);
   }
 }

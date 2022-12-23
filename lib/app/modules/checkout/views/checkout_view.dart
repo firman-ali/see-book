@@ -247,7 +247,7 @@ class CheckoutView extends GetView<CheckoutController> {
             padding: const EdgeInsets.only(left: 64.0, right: 64.0),
             sliver: SliverToBoxAdapter(
               child: ElevatedButton(
-                onPressed: () => Get.toNamed(Routes.RECOMENDATION_PAGE),
+                onPressed: () => controller.checkout(),
                 style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all(CustomColorStyle.primaryColor),
