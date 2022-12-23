@@ -15,7 +15,8 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       body: GetBuilder(
         init: controller,
-        builder: (_) => controller.isLoading == true
+        builder: (_) => controller.isLoadingExploreBookData == true ||
+                controller.isLoadingNewBookData == true
             ? const CircularProgressIndicator()
             : CustomScrollView(
                 slivers: [
@@ -118,68 +119,78 @@ class HomeView extends GetView<HomeController> {
           itemCount: 10,
           itemBuilder: (BuildContext context, int index) {
             return SizedBox(
-              width: 450,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(cardRadius),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 16.0, horizontal: 16.0),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 16.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(imageradius),
-                          child: Image.network(
-                            constantImageProfile,
-                            height: 100.0,
-                            width: 100.0,
-                            fit: BoxFit.cover,
+              width: 500,
+              child: InkWell(
+                onTap: () => Get.toNamed(Routes.BOOK_DETAIL, arguments: {
+                  "id": controller.newBookData.bookData[index].id
+                }),
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(cardRadius),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 16.0, horizontal: 16.0),
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(imageradius),
+                            child: Image.network(
+                              controller.newBookData.bookData[index].thumbnail,
+                              height: 100.0,
+                              width: 100.0,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
-                                "A Long Book Title For Debugging",
-                                style: customTextStyle.headline5,
-                                overflow: TextOverflow.ellipsis,
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Text(
+                                  controller.newBookData.bookData[index].name,
+                                  style: customTextStyle.headline5,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Row(
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 16.0),
+                                      child: Text(
+                                        controller
+                                            .newBookData.bookData[index].writer,
+                                        style: customTextStyle.bodyText1,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Row(
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(right: 16.0),
-                                    child: Text(
-                                      "Author Name",
-                                      style: customTextStyle.bodyText1,
-                                    ),
+                                    child: bookRatingInfo(
+                                        "${controller.newBookData.bookData[index].rating}"),
                                   ),
+                                  bookPriceInfo(
+                                      "${controller.newBookData.bookData[index].priceMin["price"]}",
+                                      "${controller.newBookData.bookData[index].priceMax["price"]}"),
                                 ],
                               ),
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 16.0),
-                                  child: bookRatingInfo("4.5"),
-                                ),
-                                bookPriceInfo("77.000"),
-                              ],
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -312,7 +323,7 @@ class HomeView extends GetView<HomeController> {
     );
   }
 
-  Row bookPriceInfo(String price) {
+  Row bookPriceInfo(String minPrice, String maxPrice) {
     return Row(
       children: [
         const Padding(
@@ -323,7 +334,7 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
         Text(
-          "Rp $price",
+          "Rp. $minPrice - Rp. $maxPrice",
           style: customTextStyle.bodyText1,
         ),
       ],

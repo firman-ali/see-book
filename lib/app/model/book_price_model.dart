@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:see_book_app/app/model/book_detail_model.dart';
+
 BookPriceModel bookPriceModelFromJson(String str) =>
     BookPriceModel.fromJson(json.decode(str));
 
@@ -31,42 +33,18 @@ class PriceData {
 
   String id;
   String book;
-  List<ListPrice> listPrice;
+  List<PriceM> listPrice;
 
   factory PriceData.fromJson(Map<String, dynamic> json) => PriceData(
         id: json["id"],
         book: json["book"],
-        listPrice: List<ListPrice>.from(
-            json["list_price"].map((x) => ListPrice.fromJson(x))),
+        listPrice: List<PriceM>.from(
+            json["list_price"].map((x) => PriceM.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "book": book,
         "list_price": List<dynamic>.from(listPrice.map((x) => x.toJson())),
-      };
-}
-
-class ListPrice {
-  ListPrice({
-    required this.type,
-    required this.price,
-    required this.duration,
-  });
-
-  int type;
-  int price;
-  int duration;
-
-  factory ListPrice.fromJson(Map<String, dynamic> json) => ListPrice(
-        type: json["type"],
-        price: json["price"],
-        duration: json["duration"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "type": type,
-        "price": price,
-        "duration": duration,
       };
 }

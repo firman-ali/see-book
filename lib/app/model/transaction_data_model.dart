@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'book_detail_model.dart';
+
 TransactionDataModel transactionDataModelFromJson(String str) =>
     TransactionDataModel.fromJson(json.decode(str));
 
@@ -98,8 +100,8 @@ class RecomendationBook {
 
   factory RecomendationBook.fromJson(Map<String, dynamic> json) =>
       RecomendationBook(
-        id: json["id"],
-        name: json["name"],
+        id: json["name"],
+        name: json["id"],
         writer: json["writer"],
         thumbnail: json["thumbnail"],
         rating: json["rating"].toDouble(),
@@ -111,28 +113,4 @@ class RecomendationBook {
             ? PriceM.fromJson(jsonDecode(json["price_min"]))
             : null,
       );
-}
-
-class PriceM {
-  PriceM({
-    required this.type,
-    required this.price,
-    required this.duration,
-  });
-
-  int type;
-  int price;
-  int duration;
-
-  factory PriceM.fromJson(Map<String, dynamic> json) => PriceM(
-        type: json["type"],
-        price: json["price"],
-        duration: json["duration"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "type": type,
-        "price": price,
-        "duration": duration,
-      };
 }

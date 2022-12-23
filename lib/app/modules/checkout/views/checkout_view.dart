@@ -14,13 +14,13 @@ class CheckoutView extends GetView<CheckoutController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverPadding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            sliver: GetBuilder(
-              init: controller,
-              builder: (_) => SliverToBoxAdapter(
+      body: GetBuilder(
+        init: controller,
+        builder: (_) => CustomScrollView(
+          slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              sliver: SliverToBoxAdapter(
                 child: Stack(
                   children: [
                     Container(
@@ -29,11 +29,14 @@ class CheckoutView extends GetView<CheckoutController> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          top: 32.0, left: 24.0, right: 24.0),
+                        top: 32.0,
+                        left: 24.0,
+                        right: 24.0,
+                      ),
                       child: Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 16.0),
+                            padding: const EdgeInsets.only(bottom: 32.0),
                             child: Row(
                               children: [
                                 const Expanded(
@@ -63,44 +66,66 @@ class CheckoutView extends GetView<CheckoutController> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 16.0),
-                                  child: ClipRRect(
-                                    borderRadius:
-                                        BorderRadius.circular(imageradius),
-                                    child: Image.network(
-                                      constantImageProfile,
-                                      height: 200,
-                                      width: 200,
-                                      fit: BoxFit.cover,
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 16.0),
+                                    child: ClipRRect(
+                                      borderRadius:
+                                          BorderRadius.circular(imageradius),
+                                      child: Image.network(
+                                        controller
+                                            .bookData.bookDetailData.thumbnail,
+                                        height: 100,
+                                        width: 100,
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "Title",
-                                      style:
-                                          customTextStyle.headline6?.copyWith(
-                                        color: CustomColorStyle.onPrimaryColor,
+                                Expanded(
+                                  flex: 3,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Text(
+                                          controller
+                                              .bookData.bookDetailData.name,
+                                          style: customTextStyle.headline6
+                                              ?.copyWith(
+                                            color:
+                                                CustomColorStyle.onPrimaryColor,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      "Writer",
-                                      style:
-                                          customTextStyle.bodyText1?.copyWith(
-                                        color: CustomColorStyle.onPrimaryColor,
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 8.0),
+                                        child: Text(
+                                          controller
+                                              .bookData.bookDetailData.writer,
+                                          style: customTextStyle.bodyText1
+                                              ?.copyWith(
+                                            color:
+                                                CustomColorStyle.onPrimaryColor,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      "Rp 77.000",
-                                      style:
-                                          customTextStyle.bodyText1?.copyWith(
-                                        color: CustomColorStyle.onPrimaryColor,
+                                      Text(
+                                        "Rp. ${controller.bookRentData.price}",
+                                        style:
+                                            customTextStyle.bodyText1?.copyWith(
+                                          color:
+                                              CustomColorStyle.onPrimaryColor,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -130,142 +155,141 @@ class CheckoutView extends GetView<CheckoutController> {
                 ),
               ),
             ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            sliver: SliverToBoxAdapter(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 32.0, bottom: 8.0),
-                    child: Text(
-                      "Discounts",
-                      style: customTextStyle.headline6,
+            SliverPadding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              sliver: SliverToBoxAdapter(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 32.0, bottom: 8.0),
+                      child: Text(
+                        "Discounts",
+                        style: customTextStyle.headline6,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 24.0, left: 24.0),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        label: const Padding(
-                          padding: EdgeInsets.only(left: 16.0),
-                          child: Text(
-                            "Promo Code",
+                    Padding(
+                      padding: const EdgeInsets.only(right: 24.0, left: 24.0),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          label: const Padding(
+                            padding: EdgeInsets.only(left: 16.0),
+                            child: Text(
+                              "Promo Code",
+                            ),
+                          ),
+                          filled: true,
+                          fillColor: CustomColorStyle.surfaceColor,
+                          enabledBorder: customOutlineInputBorder(
+                              CustomColorStyle.surfaceColor),
+                          focusedBorder: customOutlineInputBorder(
+                              CustomColorStyle.primaryColor),
+                          errorBorder: customOutlineInputBorder(
+                              CustomColorStyle.errorColor),
+                          focusedErrorBorder: customOutlineInputBorder(
+                              CustomColorStyle.errorColor),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SliverPadding(
+              padding:
+                  const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0),
+              sliver: SliverToBoxAdapter(
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 16.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25.0)),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 16.0, vertical: 16.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  controller.paymentMethod,
+                                  style: customTextStyle.bodyText1,
+                                ),
+                                Text(
+                                  "+ Rp. ${controller.paymentFee}",
+                                  style: customTextStyle.bodyText1,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                        filled: true,
-                        fillColor: CustomColorStyle.surfaceColor,
-                        enabledBorder: customOutlineInputBorder(
-                            CustomColorStyle.surfaceColor),
-                        focusedBorder: customOutlineInputBorder(
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => controller.changePaymentMethod(),
+                      child: Text("Change"),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
                             CustomColorStyle.primaryColor),
-                        errorBorder: customOutlineInputBorder(
-                            CustomColorStyle.errorColor),
-                        focusedErrorBorder: customOutlineInputBorder(
-                            CustomColorStyle.errorColor),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SliverPadding(
-            padding:
-                const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0),
-            sliver: SliverToBoxAdapter(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 16.0),
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25.0)),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16.0, vertical: 16.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                controller.paymentMethod,
-                                style: customTextStyle.bodyText1,
-                              ),
-                              Text(
-                                "+ Rp. ${controller.paymentFee}",
-                                style: customTextStyle.bodyText1,
-                              ),
-                            ],
-                          ),
+                        foregroundColor: MaterialStateProperty.all(
+                            CustomColorStyle.onPrimaryColor),
+                        shape: MaterialStateProperty.all(
+                          StadiumBorder(),
                         ),
                       ),
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () => controller.changePaymentMethod(),
-                    child: Text("Change"),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(
-                          CustomColorStyle.primaryColor),
-                      foregroundColor: MaterialStateProperty.all(
-                          CustomColorStyle.onPrimaryColor),
-                      shape: MaterialStateProperty.all(
-                        StadiumBorder(),
-                      ),
+                  ],
+                ),
+              ),
+            ),
+            SliverPadding(
+              padding:
+                  const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0),
+              sliver: SliverToBoxAdapter(
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(cardRadius)),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 16.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("Total Price : "),
+                        Text(
+                            "Rp. ${controller.bookRentData.price + controller.paymentFee}"),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
             ),
-          ),
-          SliverPadding(
-            padding:
-                const EdgeInsets.only(left: 24.0, right: 24.0, bottom: 16.0),
-            sliver: SliverToBoxAdapter(
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(cardRadius)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Total Price : "),
-                      Text(
-                        "Rp. 777.000",
-                      ),
-                    ],
+            SliverPadding(
+              padding: const EdgeInsets.only(left: 64.0, right: 64.0),
+              sliver: SliverToBoxAdapter(
+                child: ElevatedButton(
+                  onPressed: () => controller.checkout(),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                        CustomColorStyle.primaryColor),
+                    foregroundColor: MaterialStateProperty.all(
+                        CustomColorStyle.onPrimaryColor),
+                    shape: MaterialStateProperty.all(
+                      StadiumBorder(),
+                    ),
+                  ),
+                  child: const Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                    child: Text("Beli"),
                   ),
                 ),
               ),
             ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.only(left: 64.0, right: 64.0),
-            sliver: SliverToBoxAdapter(
-              child: ElevatedButton(
-                onPressed: () => controller.checkout(),
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all(CustomColorStyle.primaryColor),
-                  foregroundColor: MaterialStateProperty.all(
-                      CustomColorStyle.onPrimaryColor),
-                  shape: MaterialStateProperty.all(
-                    StadiumBorder(),
-                  ),
-                ),
-                child: const Padding(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                  child: Text("Beli"),
-                ),
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

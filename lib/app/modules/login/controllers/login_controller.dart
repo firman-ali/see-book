@@ -12,6 +12,7 @@ class LoginController extends GetxController {
 
   @override
   void onInit() {
+    FirebaseAuth.instance.signOut();
     formKey = GlobalKey<FormState>();
     emailTextEditingController = TextEditingController();
     passwordTextEditingController = TextEditingController();
@@ -43,10 +44,10 @@ class LoginController extends GetxController {
     }
   }
 
-  formValidator() {
+  formValidator() async {
     if (formKey.currentState?.validate() == true) {
       try {
-        LoginService().login(emailTextEditingController.text,
+        await LoginService().login(emailTextEditingController.text,
             passwordTextEditingController.text);
         Get.offNamed(Routes.HOME);
       } catch (e) {

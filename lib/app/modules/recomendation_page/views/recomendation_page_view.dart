@@ -93,97 +93,117 @@ class RecomendationPageView extends GetView<RecomendationPageController> {
         ),
         SliverPadding(
           padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-          sliver: SliverList(delegate:
-              SliverChildBuilderDelegate((BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: InkWell(
-                onTap: () {},
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(cardRadius)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 24.0,
-                      vertical: 16.0,
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: InkWell(
+                    onTap: () => Get.toNamed(
+                      Routes.BOOK_DETAIL,
+                      arguments: {
+                        "id": controller
+                            .transactionData.recomendationBooks[index].id,
+                      },
                     ),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 16.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(imageradius),
-                            child: Image.network(
-                              constantImageProfile,
-                              height: 100,
-                              width: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(cardRadius)),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24.0,
+                          vertical: 16.0,
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
                           children: [
                             Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
-                                "Book title",
-                                style: customTextStyle.headline5,
+                              padding: const EdgeInsets.only(right: 16.0),
+                              child: ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(imageradius),
+                                child: Image.network(
+                                  controller.transactionData
+                                      .recomendationBooks[index].thumbnail,
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
-                                "Writer",
-                                style: customTextStyle.bodyText1,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 16.0),
-                                  child: Row(
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Text(
+                                      controller.transactionData
+                                          .recomendationBooks[index].name,
+                                      style: customTextStyle.headline5,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 8.0),
+                                    child: Text(
+                                      controller.transactionData
+                                          .recomendationBooks[index].writer,
+                                      style: customTextStyle.bodyText1,
+                                    ),
+                                  ),
+                                  Row(
                                     children: [
-                                      const Padding(
-                                        padding: EdgeInsets.only(right: 8.0),
-                                        child: Icon(
-                                          Icons.star,
-                                          color: Colors.orange,
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(right: 16.0),
+                                        child: Row(
+                                          children: [
+                                            const Padding(
+                                              padding:
+                                                  EdgeInsets.only(right: 8.0),
+                                              child: Icon(
+                                                Icons.star,
+                                                color: Colors.orange,
+                                              ),
+                                            ),
+                                            Text(
+                                              "${controller.transactionData.recomendationBooks[index].rating} / 5",
+                                              style: customTextStyle.bodyText1,
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      Text(
-                                        "4.5 / 5",
-                                        style: customTextStyle.bodyText1,
-                                      ),
+                                      Row(
+                                        children: [
+                                          const Padding(
+                                            padding:
+                                                EdgeInsets.only(right: 8.0),
+                                            child: Icon(
+                                              Icons.paid,
+                                              color: Colors.green,
+                                            ),
+                                          ),
+                                          Text(
+                                            "Rp. -",
+                                            style: customTextStyle.bodyText1,
+                                          )
+                                        ],
+                                      )
                                     ],
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(right: 8.0),
-                                      child: Icon(
-                                        Icons.paid,
-                                        color: Colors.green,
-                                      ),
-                                    ),
-                                    Text(
-                                      "Rp. 77.000",
-                                      style: customTextStyle.bodyText1,
-                                    )
-                                  ],
-                                )
-                              ],
-                            )
+                                  )
+                                ],
+                              ),
+                            ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-            );
-          })),
+                );
+              },
+              childCount: controller.transactionData.recomendationBooks.length,
+            ),
+          ),
         )
       ],
     ));

@@ -334,7 +334,11 @@ class BookDetailView extends GetView<BookDetailController> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16.0),
                   child: ElevatedButton(
-                    onPressed: () => Get.toNamed(Routes.CHECKOUT),
+                    onPressed: () => Get.toNamed(Routes.CHECKOUT, arguments: {
+                      "book_data": controller.bookDetailData,
+                      "price_data":
+                          controller.bookDetailData.bookDetailData.priceMax
+                    }),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
                           CustomColorStyle.primaryColor),

@@ -7,12 +7,15 @@ import 'package:see_book_app/app/modules/home/service/home_service.dart';
 class HomeController extends GetxController {
   bool isFavorite = false;
   late TextEditingController bookTextEditingController;
-  bool isLoading = true;
+  bool isLoadingExploreBookData = true;
   late BookModel bookData;
+  bool isLoadingNewBookData = true;
+  late BookModel newBookData;
 
   @override
   void onInit() {
     bookTextEditingController = TextEditingController();
+    fetchNewBookData();
     fetchBookData();
     super.onInit();
   }
@@ -26,8 +29,14 @@ class HomeController extends GetxController {
     bookData = await HomeService().getBookData();
     var token = await FirebaseAuth.instance.currentUser!.getIdToken();
     print(token);
-    isLoading = false;
+    isLoadingExploreBookData = false;
     update();
     print(bookData.bookData[0].name);
+  }
+
+  fetchNewBookData() async {
+    newBookData = await HomeService().getNewBookData();
+    isLoadingNewBookData = false;
+    update();
   }
 }

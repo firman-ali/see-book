@@ -18,85 +18,85 @@ class RentPageView extends GetView<RentPageController> {
           padding: EdgeInsets.symmetric(horizontal: sidePadding),
           child: GetBuilder(
             init: controller,
-            builder: (_) => Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16.0),
-                  child: Row(
+            builder: (_) => controller.isLoading == true
+                ? CircularProgressIndicator()
+                : Column(
                     children: [
-                      ElevatedButton(
-                        onPressed: () => Get.back(),
-                        child: Icon(Icons.arrow_back_ios),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              CustomColorStyle.surfaceColor),
-                          foregroundColor: MaterialStateProperty.all(
-                              CustomColorStyle.onSurfaceColor),
-                          shape: MaterialStateProperty.all(
-                            StadiumBorder(),
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 16.0),
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () => Get.back(),
+                              child: Icon(Icons.arrow_back_ios),
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    CustomColorStyle.surfaceColor),
+                                foregroundColor: MaterialStateProperty.all(
+                                    CustomColorStyle.onSurfaceColor),
+                                shape: MaterialStateProperty.all(
+                                  StadiumBorder(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 24.0),
+                        child:
+                            Text("Book Rent", style: customTextStyle.headline5),
+                      ),
+                      Expanded(
+                        child: ListView.builder(
+                          itemBuilder: (BuildContext context, int index) {
+                            return InkWell(
+                              onTap: () =>
+                                  Get.toNamed(Routes.CHECKOUT, arguments: {
+                                "book_data": controller.bookDetailData,
+                                "price_data": controller
+                                    .bookPriceData.priceData.listPrice[index],
+                              }),
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                    cardRadius,
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24.0, vertical: 16.0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      controller.bookPriceData.priceData
+                                                  .listPrice[index].duration ==
+                                              0
+                                          ? Text(
+                                              "Buy book",
+                                              style: customTextStyle.bodyText1,
+                                            )
+                                          : Text(
+                                              "${controller.bookPriceData.priceData.listPrice[index].duration} Days",
+                                              style: customTextStyle.bodyText1,
+                                            ),
+                                      Text(
+                                        "Rp. ${controller.bookPriceData.priceData.listPrice[index].price}",
+                                        style: customTextStyle.bodyText1,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                          itemCount: controller
+                              .bookPriceData.priceData.listPrice.length,
                         ),
                       ),
                     ],
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 24.0),
-                  child: Text("Book Rent", style: customTextStyle.headline5),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemBuilder: (BuildContext context, int index) {
-                      return Card(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            controller.bookPriceData.priceData.listPrice[index]
-                                        .duration ==
-                                    0
-                                ? Text(
-                                    "Buy book",
-                                  )
-                                : Text(
-                                    "${controller.bookPriceData.priceData.listPrice[index].duration} Days",
-                                  ),
-                            Text(
-                              "Rp. ${controller.bookPriceData.priceData.listPrice[index].price},",
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                    itemCount:
-                        controller.bookPriceData.priceData.listPrice.length,
-                  ),
-                ),
-                InkWell(
-                  onTap: () => Get.toNamed(Routes.CHECKOUT),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(cardRadius)),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "7 Hari",
-                            style: customTextStyle.bodyText1,
-                          ),
-                          Text(
-                            "Rp. 77.000",
-                            style: customTextStyle.bodyText1,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
           ),
         ),
       ),

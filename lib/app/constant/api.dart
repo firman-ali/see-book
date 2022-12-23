@@ -3,4 +3,6 @@ class Api {
 
   static const getBookPath = "$baseUrl/v1/books";
   static const getBookPricePath = "$baseUrl/v1/prices";
+  static const getNewBookPath = "$baseUrl/v1/new-books";
+  static const getTransactionPath = "$baseUrl/v1/sales";
 }

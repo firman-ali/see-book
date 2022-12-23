@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
+import 'package:see_book_app/app/model/transaction_data_model.dart';
 
 class RecomendationPageController extends GetxController {
-  //TODO: Implement RecomendationPageController
-
-  final count = 0.obs;
+  late TransactionDataModel transactionData;
   @override
   void onInit() {
+    transactionData = Get.arguments;
+    print(transactionData.data.fee);
     super.onInit();
   }
 
@@ -18,6 +19,4 @@ class RecomendationPageController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }

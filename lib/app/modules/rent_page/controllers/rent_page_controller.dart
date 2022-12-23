@@ -7,6 +7,7 @@ import 'package:see_book_app/app/modules/rent_page/service/rent_page_service.dar
 class RentPageController extends GetxController {
   late BookDetailModel bookDetailData;
   late BookPriceModel bookPriceData;
+  bool isLoading = true;
 
   @override
   void onInit() {
@@ -29,5 +30,7 @@ class RentPageController extends GetxController {
     var token = await FirebaseAuth.instance.currentUser!.getIdToken();
     var bookId = bookDetailData.bookDetailData.id;
     bookPriceData = await RentPageService().getBookPriceData(bookId, token);
+    isLoading = false;
+    update();
   }
 }

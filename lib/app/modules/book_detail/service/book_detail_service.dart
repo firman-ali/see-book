@@ -13,6 +13,8 @@ class BookDetailService {
       },
     );
 
+    print(response.body);
+
     if (response.statusCode == 200) {
       return BookDetailModel.fromJson(jsonDecode(response.body));
     } else {
