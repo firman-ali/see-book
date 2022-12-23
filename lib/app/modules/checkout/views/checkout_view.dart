@@ -18,109 +18,116 @@ class CheckoutView extends GetView<CheckoutController> {
         slivers: [
           SliverPadding(
             padding: const EdgeInsets.only(bottom: 16.0),
-            sliver: SliverToBoxAdapter(
-              child: Stack(
-                children: [
-                  Container(
-                    height: 395,
-                    color: CustomColorStyle.primaryColor,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        top: 32.0, left: 24.0, right: 24.0),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
-                          child: Row(
-                            children: [
-                              const Expanded(
-                                child: CustomBackButton(),
-                              ),
-                              Expanded(
-                                flex: 7,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+            sliver: GetBuilder(
+              init: controller,
+              builder: (_) => SliverToBoxAdapter(
+                child: Stack(
+                  children: [
+                    Container(
+                      height: 395,
+                      color: CustomColorStyle.primaryColor,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          top: 32.0, left: 24.0, right: 24.0),
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: Row(
+                              children: [
+                                const Expanded(
+                                  child: CustomBackButton(),
+                                ),
+                                Expanded(
+                                  flex: 7,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        "Checkout",
+                                        style:
+                                            customTextStyle.headline5?.copyWith(
+                                          color:
+                                              CustomColorStyle.onPrimaryColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 16.0),
+                                  child: ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.circular(imageradius),
+                                    child: Image.network(
+                                      constantImageProfile,
+                                      height: 200,
+                                      width: 200,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      "Checkout",
+                                      "Title",
                                       style:
-                                          customTextStyle.headline5?.copyWith(
+                                          customTextStyle.headline6?.copyWith(
+                                        color: CustomColorStyle.onPrimaryColor,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Writer",
+                                      style:
+                                          customTextStyle.bodyText1?.copyWith(
+                                        color: CustomColorStyle.onPrimaryColor,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Rp 77.000",
+                                      style:
+                                          customTextStyle.bodyText1?.copyWith(
                                         color: CustomColorStyle.onPrimaryColor,
                                       ),
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
-                          child: Row(
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 16.0),
-                                child: ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.circular(imageradius),
-                                  child: Image.network(
-                                    constantImageProfile,
-                                    height: 200,
-                                    width: 200,
-                                    fit: BoxFit.cover,
-                                  ),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 16.0),
+                                child: Icon(
+                                  Icons.info,
+                                  color: CustomColorStyle.onPrimaryColor,
                                 ),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Title",
-                                    style: customTextStyle.headline6?.copyWith(
-                                      color: CustomColorStyle.onPrimaryColor,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Writer",
-                                    style: customTextStyle.bodyText1?.copyWith(
-                                      color: CustomColorStyle.onPrimaryColor,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Rp 77.000",
-                                    style: customTextStyle.bodyText1?.copyWith(
-                                      color: CustomColorStyle.onPrimaryColor,
-                                    ),
-                                  ),
-                                ],
+                              Text(
+                                "You can read this book until: -",
+                                style: customTextStyle.bodyText1?.copyWith(
+                                  color: CustomColorStyle.onPrimaryColor,
+                                ),
                               ),
                             ],
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(right: 16.0),
-                              child: Icon(
-                                Icons.info,
-                                color: CustomColorStyle.onPrimaryColor,
-                              ),
-                            ),
-                            Text(
-                              "You can read this book until: -",
-                              style: customTextStyle.bodyText1?.copyWith(
-                                color: CustomColorStyle.onPrimaryColor,
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                ],
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
@@ -183,11 +190,11 @@ class CheckoutView extends GetView<CheckoutController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                "Payment Method",
+                                controller.paymentMethod,
                                 style: customTextStyle.bodyText1,
                               ),
                               Text(
-                                "+ Rp 7.000",
+                                "+ Rp. ${controller.paymentFee}",
                                 style: customTextStyle.bodyText1,
                               ),
                             ],
@@ -197,7 +204,7 @@ class CheckoutView extends GetView<CheckoutController> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => controller.changePaymentMethod(),
                     child: Text("Change"),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(

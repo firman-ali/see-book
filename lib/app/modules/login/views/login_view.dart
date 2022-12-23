@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:see_book_app/app/constant/constant.dart';
 import 'package:see_book_app/app/constant/custom_color_style.dart';
 import 'package:see_book_app/app/constant/custom_text_style.dart';
+import 'package:see_book_app/app/routes/app_pages.dart';
 
 import '../controllers/login_controller.dart';
 
@@ -118,6 +119,25 @@ class LoginView extends GetView<LoginController> {
                   ),
                 ),
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Didn't have an account? ",
+                    style: customTextStyle.bodyText1,
+                  ),
+                  TextButton(
+                    onPressed: () => Get.offNamed(Routes.REGISTRATION),
+                    style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all(
+                            CustomColorStyle.secondaryColor)),
+                    child: Text(
+                      "Register now.",
+                      style: customTextStyle.bodyText1,
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),

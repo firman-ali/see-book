@@ -12,3 +12,23 @@ List<String> constantCategory = [
 double sidePadding = 24.0;
 double cardRadius = 25.0;
 double imageradius = 30.0;
+
+List<String> paymentMethodEWallet = [
+  "Dana",
+  "Ovo",
+];
+
+List<int> paymentMethodEwalletFee = [
+  7000,
+  5000,
+];
+
+List<String> paymentMethodVa = [
+  "BNI",
+  "BCA",
+];
+
+List<int> paymentMethodVaFee = [
+  5500,
+  9000,
+];

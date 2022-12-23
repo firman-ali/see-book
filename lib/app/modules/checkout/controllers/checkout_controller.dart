@@ -1,9 +1,10 @@
 import 'package:get/get.dart';
+import 'package:see_book_app/app/constant/constant.dart';
+import 'package:see_book_app/app/modules/checkout/views/payment_view.dart';
 
 class CheckoutController extends GetxController {
-  //TODO: Implement CheckoutController
-
-  final count = 0.obs;
+  String paymentMethod = paymentMethodEWallet[0];
+  int paymentFee = paymentMethodEwalletFee[0];
   @override
   void onInit() {
     super.onInit();
@@ -19,5 +20,14 @@ class CheckoutController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  changePaymentMethod() {
+    Get.dialog(PaymentView());
+  }
+
+  changeCurrentPaymentMethod(String paymentMethodName, int paymentMethodFee) {
+    paymentMethod = paymentMethodName;
+    paymentFee = paymentMethodFee;
+    update();
+    Get.back();
+  }
 }
