@@ -52,7 +52,8 @@ class BookDetailView extends GetView<BookDetailController> {
                                         borderRadius:
                                             BorderRadius.circular(imageradius),
                                         child: Image.network(
-                                          constantImageProfile,
+                                          controller.bookDetailData
+                                              .bookDetailData.thumbnail,
                                           height: 175,
                                           fit: BoxFit.cover,
                                         ),
@@ -156,10 +157,20 @@ class BookDetailView extends GetView<BookDetailController> {
                                 "Price",
                                 style: customTextStyle.headline6,
                               ),
-                              Text(
-                                "Rp. 77.000 - Rp. 190.000",
-                                style: customTextStyle.bodyText1,
-                              ),
+                              controller.bookDetailData.bookDetailData
+                                              .priceMin ==
+                                          null ||
+                                      controller.bookDetailData.bookDetailData
+                                              .priceMax ==
+                                          null
+                                  ? Text(
+                                      "Rp -",
+                                      style: customTextStyle.bodyText1,
+                                    )
+                                  : Text(
+                                      "Rp. ${controller.bookDetailData.bookDetailData.priceMin!.price} - Rp. ${controller.bookDetailData.bookDetailData.priceMax!.price}",
+                                      style: customTextStyle.bodyText1,
+                                    ),
                             ],
                           ),
                         ),
@@ -301,7 +312,8 @@ class BookDetailView extends GetView<BookDetailController> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 16.0),
                   child: ElevatedButton(
-                    onPressed: () => Get.toNamed(Routes.RENT_PAGE),
+                    onPressed: () => Get.toNamed(Routes.RENT_PAGE,
+                        arguments: controller.bookDetailData),
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(
                           CustomColorStyle.primaryColor),

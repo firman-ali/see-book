@@ -30,44 +30,151 @@ class RegistrationView extends GetView<RegistrationController> {
                 key: controller.formKey,
                 child: Column(
                   children: [
-                    TextFormField(
-                      controller: controller.emailTextEditingController,
-                      validator: (value) => controller.emailValidator(value),
-                      decoration: InputDecoration(
-                        label: Text(
-                          "Email",
-                          style: customTextStyle.bodyText1,
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: TextFormField(
+                        controller: controller.emailTextEditingController,
+                        validator: (value) => controller.emailValidator(value),
+                        decoration: InputDecoration(
+                          label: Text(
+                            "Email",
+                            style: customTextStyle.bodyText1?.copyWith(
+                                color: CustomColorStyle.primaryColor),
+                          ),
+                          filled: true,
+                          fillColor: CustomColorStyle.surfaceColor,
+                          enabledBorder: customOutlineInputBorder(
+                              CustomColorStyle.surfaceColor),
+                          focusedBorder: customOutlineInputBorder(
+                              CustomColorStyle.primaryColor),
+                          errorBorder: customOutlineInputBorder(
+                              CustomColorStyle.errorColor),
+                          focusedErrorBorder: customOutlineInputBorder(
+                              CustomColorStyle.primaryColor),
                         ),
-                        filled: true,
-                        fillColor: CustomColorStyle.surfaceColor,
-                        enabledBorder: customOutlineInputBorder(
-                            CustomColorStyle.surfaceColor),
-                        focusedBorder: customOutlineInputBorder(
-                            CustomColorStyle.primaryColor),
-                        errorBorder: customOutlineInputBorder(
-                            CustomColorStyle.errorColor),
-                        focusedErrorBorder: customOutlineInputBorder(
-                            CustomColorStyle.primaryColor),
                       ),
                     ),
-                    TextFormField(
-                      controller: controller.passwordTextEditingController,
-                      validator: (value) => controller.passwordValidator(value),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: TextFormField(
+                        controller: controller.passwordTextEditingController,
+                        validator: (value) =>
+                            controller.passwordValidator(value),
+                        obscureText: controller.isPasswordObscureOn == true
+                            ? true
+                            : false,
+                        decoration: InputDecoration(
+                          label: Text(
+                            "Password",
+                            style: customTextStyle.bodyText1?.copyWith(
+                                color: CustomColorStyle.primaryColor),
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () =>
+                                controller.changePasswordObscureStatus(),
+                            icon: controller.isPasswordObscureOn == true
+                                ? const Icon(
+                                    Icons.visibility_off,
+                                  )
+                                : const Icon(
+                                    Icons.visibility,
+                                  ),
+                          ),
+                          filled: true,
+                          fillColor: CustomColorStyle.surfaceColor,
+                          enabledBorder: customOutlineInputBorder(
+                              CustomColorStyle.surfaceColor),
+                          focusedBorder: customOutlineInputBorder(
+                              CustomColorStyle.primaryColor),
+                          errorBorder: customOutlineInputBorder(
+                              CustomColorStyle.errorColor),
+                          focusedErrorBorder: customOutlineInputBorder(
+                              CustomColorStyle.primaryColor),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 16.0),
+                      child: TextFormField(
+                        obscureText:
+                            controller.isReTypePasswordObscureOn == true
+                                ? true
+                                : false,
+                        validator: (value) =>
+                            controller.reTypePasswordValidator(value),
+                        decoration: InputDecoration(
+                          label: Text(
+                            "Re-Type Password",
+                            style: customTextStyle.bodyText1?.copyWith(
+                                color: CustomColorStyle.primaryColor),
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () =>
+                                controller.changeReTypePasswordObscureStatus(),
+                            icon: controller.isReTypePasswordObscureOn == true
+                                ? const Icon(
+                                    Icons.visibility_off,
+                                  )
+                                : const Icon(
+                                    Icons.visibility,
+                                  ),
+                          ),
+                          filled: true,
+                          fillColor: CustomColorStyle.surfaceColor,
+                          enabledBorder: customOutlineInputBorder(
+                              CustomColorStyle.surfaceColor),
+                          focusedBorder: customOutlineInputBorder(
+                              CustomColorStyle.primaryColor),
+                          errorBorder: customOutlineInputBorder(
+                              CustomColorStyle.errorColor),
+                          focusedErrorBorder: customOutlineInputBorder(
+                              CustomColorStyle.primaryColor),
+                        ),
+                      ),
                     ),
                     ElevatedButton(
                       onPressed: () => controller.formValidator(),
-                      child: Text("Register"),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          CustomColorStyle.primaryColor,
+                        ),
+                        foregroundColor: MaterialStateProperty.all(
+                            CustomColorStyle.onPrimaryColor),
+                        shape: MaterialStateProperty.all(
+                          StadiumBorder(),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Register",
+                          style: customTextStyle.bodyText1,
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Already have an account?"),
+                Text(
+                  "Already have an account?",
+                  style: customTextStyle.bodyText1,
+                ),
                 TextButton(
-                    onPressed: () => Get.offNamed(Routes.LOGIN),
-                    child: Text("Login now."))
+                  onPressed: () => Get.offNamed(Routes.LOGIN),
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all(
+                      CustomColorStyle.secondaryColor,
+                    ),
+                  ),
+                  child: Text(
+                    "Login now.",
+                    style: customTextStyle.bodyText1,
+                  ),
+                )
               ],
             )
           ],

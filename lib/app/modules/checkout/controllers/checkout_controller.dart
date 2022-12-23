@@ -21,7 +21,7 @@ class CheckoutController extends GetxController {
   }
 
   changePaymentMethod() {
-    Get.dialog(PaymentView());
+    Get.dialog(const PaymentView());
   }
 
   changeCurrentPaymentMethod(String paymentMethodName, int paymentMethodFee) {

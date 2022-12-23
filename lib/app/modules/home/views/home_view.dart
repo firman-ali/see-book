@@ -210,7 +210,7 @@ class HomeView extends GetView<HomeController> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(imageradius),
                       child: Image.network(
-                        constantImageProfile,
+                        controller.bookData.bookData[index].thumbnail,
                         height: 100,
                         width: 100,
                         fit: BoxFit.cover,
@@ -271,10 +271,19 @@ class HomeView extends GetView<HomeController> {
                                     color: Colors.green,
                                   ),
                                 ),
-                                Text(
-                                  "Rp. 777.000",
-                                  style: customTextStyle.bodyText2,
-                                ),
+                                controller.bookData.bookData[index].priceMin ==
+                                            null ||
+                                        controller.bookData.bookData[index]
+                                                .priceMax ==
+                                            null
+                                    ? Text(
+                                        "Rp. -",
+                                        style: customTextStyle.bodyText2,
+                                      )
+                                    : Text(
+                                        "Rp. ${controller.bookData.bookData[index].priceMin["price"]} - Rp. ${controller.bookData.bookData[index].priceMax["price"]}",
+                                        style: customTextStyle.bodyText2,
+                                      ),
                               ],
                             )
                           ],

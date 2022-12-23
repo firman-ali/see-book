@@ -5,6 +5,9 @@ class RegistrationController extends GetxController {
   late GlobalKey<FormState> formKey;
   late TextEditingController emailTextEditingController;
   late TextEditingController passwordTextEditingController;
+  bool isPasswordObscureOn = true;
+  bool isReTypePasswordObscureOn = true;
+
   @override
   void onInit() {
     formKey = GlobalKey<FormState>();
@@ -23,6 +26,16 @@ class RegistrationController extends GetxController {
     super.onClose();
   }
 
+  changePasswordObscureStatus() {
+    isPasswordObscureOn = !isPasswordObscureOn;
+    update();
+  }
+
+  changeReTypePasswordObscureStatus() {
+    isReTypePasswordObscureOn = !isReTypePasswordObscureOn;
+    update();
+  }
+
   emailValidator(String? value) {
     if (value == null || value.isEmpty) {
       return "This field can't be empty";
@@ -38,6 +51,16 @@ class RegistrationController extends GetxController {
       return "This field can't be empty";
     } else if (value.length < 7) {
       return "Password must contain at least 7 characters";
+    } else {
+      return null;
+    }
+  }
+
+  reTypePasswordValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return "This field can't be empty";
+    } else if (value != passwordTextEditingController.text) {
+      return "Password didn't match";
     } else {
       return null;
     }

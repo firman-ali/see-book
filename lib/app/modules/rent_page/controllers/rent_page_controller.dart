@@ -1,11 +1,17 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:see_book_app/app/model/book_detail_model.dart';
+import 'package:see_book_app/app/model/book_price_model.dart';
+import 'package:see_book_app/app/modules/rent_page/service/rent_page_service.dart';
 
 class RentPageController extends GetxController {
-  //TODO: Implement RentPageController
+  late BookDetailModel bookDetailData;
+  late BookPriceModel bookPriceData;
 
-  final count = 0.obs;
   @override
   void onInit() {
+    bookDetailData = Get.arguments;
+    fetchPriceData();
     super.onInit();
   }
 
@@ -19,5 +25,9 @@ class RentPageController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  fetchPriceData() async {
+    var token = await FirebaseAuth.instance.currentUser!.getIdToken();
+    var bookId = bookDetailData.bookDetailData.id;
+    bookPriceData = await RentPageService().getBookPriceData(bookId, token);
+  }
 }
